@@ -47,11 +47,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
-
-  // Define a reference to the Firebase Realtime Database
   final DatabaseReference ref = FirebaseDatabase.instance.ref();
+  
+  String? selectedKey;
 
-  // Function to add name to Firebase
   void _submitName() {
     if (_formKey.currentState!.validate()) {
       String name = _nameController.text;
@@ -60,10 +59,27 @@ class _MyHomePageState extends State<MyHomePage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Name added to database!")),
         );
-        _nameController.clear(); // Clear the input field
+        _nameController.clear();
       }).catchError((error) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Failed to add name: $error")),
+        );
+      });
+    }
+  }
+
+  void _deleteName() {
+    if (selectedKey != null) {
+      ref.child("users/$selectedKey").remove().then((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Name deleted from database!")),
+        );
+        setState(() {
+          selectedKey = null; // Clear the selected key
+        });
+      }).catchError((error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Failed to delete name: $error")),
         );
       });
     }
@@ -104,8 +120,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Text("Submit"),
               ),
               SizedBox(height: 20),
-
-              // StreamBuilder to show list of users
               Expanded(
                 child: StreamBuilder(
                   stream: ref.child("users").onValue,
@@ -119,19 +133,36 @@ class _MyHomePageState extends State<MyHomePage> {
                       if (usersMap == null) {
                         return Text("No users found.");
                       }
-                      final List<Map<dynamic, dynamic>> usersList = usersMap.values.map((user) => Map<dynamic, dynamic>.from(user)).toList();
-                      
+
+                      final List<MapEntry<dynamic, dynamic>> usersList = usersMap.entries.toList();
+
                       return ListView.builder(
                         itemCount: usersList.length,
                         itemBuilder: (context, index) {
+                          final userKey = usersList[index].key;
+                          final userName = usersList[index].value["name"];
                           return ListTile(
-                            title: Text(usersList[index]["name"] ?? "No name"),
+                            title: Text(userName ?? "No name"),
+                            selected: userKey == selectedKey,
+                            onTap: () {
+                              setState(() {
+                                selectedKey = userKey;
+                              });
+                            },
                           );
                         },
                       );
                     }
                     return Text("No data available");
                   },
+                ),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: selectedKey != null ? _deleteName : null,
+                child: Text("Delete Selected"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
                 ),
               ),
             ],
