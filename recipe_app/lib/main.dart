@@ -15,7 +15,7 @@ const FirebaseOptions MyFirebaseOptions = FirebaseOptions(
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: MyFirebaseOptions); 
+  await Firebase.initializeApp(options: MyFirebaseOptions);
   runApp(const MyApp());
 }
 
@@ -102,6 +102,37 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: _submitName,
                 child: Text("Submit"),
+              ),
+              SizedBox(height: 20),
+
+              // StreamBuilder to show list of users
+              Expanded(
+                child: StreamBuilder(
+                  stream: ref.child("users").onValue,
+                  builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else if (snapshot.hasError) {
+                      return Text("Error: ${snapshot.error}");
+                    } else if (snapshot.hasData) {
+                      final Map<dynamic, dynamic>? usersMap = snapshot.data!.snapshot.value as Map?;
+                      if (usersMap == null) {
+                        return Text("No users found.");
+                      }
+                      final List<Map<dynamic, dynamic>> usersList = usersMap.values.map((user) => Map<dynamic, dynamic>.from(user)).toList();
+                      
+                      return ListView.builder(
+                        itemCount: usersList.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(usersList[index]["name"] ?? "No name"),
+                          );
+                        },
+                      );
+                    }
+                    return Text("No data available");
+                  },
+                ),
               ),
             ],
           ),
