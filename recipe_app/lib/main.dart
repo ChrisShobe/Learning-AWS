@@ -1,9 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+const FirebaseOptions MyFirebaseOptions = FirebaseOptions(
+  apiKey: "AIzaSyA0CBD0ZspPk7Kg25t4-zBpSxWtTpq4GEE",
+  authDomain: "aws-practice-6e9e3.firebaseapp.com",
+  databaseURL: "https://aws-practice-6e9e3-default-rtdb.firebaseio.com",
+  projectId: "aws-practice-6e9e3",
+  storageBucket: "aws-practice-6e9e3.appspot.com",
+  messagingSenderId: "461228697813",
+  appId: "1:461228697813:web:e62af2c24b79c8d6a25a5c",
+  measurementId: "G-JM7GP4WVPY",
+);
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Firebase.initializeApp(options: MyFirebaseOptions); 
+  } catch (e) {
+    print("Error initializing Firebase: $e");
+  }
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -28,7 +45,7 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
