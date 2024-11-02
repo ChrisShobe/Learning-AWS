@@ -98,6 +98,150 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Container(
+                width: 1535,
+                height: 1171,
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(color: Color(0xFF868686)),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      left: 93,
+                      top: 232,
+                      child: SizedBox(
+                        width: 1388,
+                        height: 207,
+                        child: Text(
+                          'Please Enter Your Name',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 120,
+                            fontFamily: 'Irish Grover',
+                            fontWeight: FontWeight.w400,
+                            height: 0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 217,
+                      top: 492,
+                      child: Container(
+                        width: 1101,
+                        height: 187,
+                        decoration: ShapeDecoration(
+                          color: Color(0xFFD9D9D9),
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(width: 1),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          shadows: [
+                            BoxShadow(
+                              color: Color(0x3F000000),
+                              blurRadius: 4,
+                              offset: Offset(0, 4),
+                              spreadRadius: 0,
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 54,
+                      top: 56,
+                      child: Container(
+                        width: 39,
+                        height: 35,
+                        decoration: ShapeDecoration(
+                          color: Color(0xFFD9D9D9),
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(width: 1),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 1422,
+                      top: 56,
+                      child: Container(
+                        width: 39,
+                        height: 35,
+                        decoration: ShapeDecoration(
+                          color: Color(0xFFD9D9D9),
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(width: 1),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 1422,
+                      top: 1047,
+                      child: Container(
+                        width: 39,
+                        height: 35,
+                        decoration: ShapeDecoration(
+                          color: Color(0xFFD9D9D9),
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(width: 1),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 54,
+                      top: 1047,
+                      child: Container(
+                        width: 39,
+                        height: 35,
+                        decoration: ShapeDecoration(
+                          color: Color(0xFFD9D9D9),
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(width: 1),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 491,
+                      top: 814,
+                      child: Container(
+                        width: 552,
+                        height: 180,
+                        decoration: ShapeDecoration(
+                          color: Color(0xFFD9D9D9),
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(width: 1),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 635,
+                      top: 857,
+                      child: SizedBox(
+                        width: 354,
+                        height: 94,
+                        child: Text(
+                          'Submit',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 90,
+                            fontFamily: 'Inria Sans',
+                            fontWeight: FontWeight.w400,
+                            height: 0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Form(
                 key: _formKey,
                 child: TextFormField(
@@ -117,7 +261,7 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _submitName,
-                child: Text("Submit"),
+                child: Text('Submit'),
               ),
               SizedBox(height: 20),
               Expanded(
